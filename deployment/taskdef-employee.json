@@ -1,25 +1,22 @@
 {
-  "family": "employee-microservice",
-  "networkMode": "awsvpc",
-  "executionRoleArn": "arn:aws:iam::815791340595:role/PipelineRole",
   "containerDefinitions": [
     {
       "name": "employee",
-      "image": "815791340595.dkr.ecr.us-east-1.amazonaws.com/employee:latest",
-      "portMappings": [
-        {
-          "containerPort": 8080,
-          "hostPort": 8080,
-          "protocol": "tcp"
-        }
-      ],
+      "image": "employee",
       "environment": [
         {
           "name": "APP_DB_HOST",
-          "value": "supplierdb.cm8ozknfnbvc.us-east-1.rds.amazonaws.com"
+          "value": "<RDS-ENDPOINT>"
         }
       ],
       "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "protocol": "tcp",
+          "containerPort": 8080
+        }
+      ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -32,6 +29,9 @@
     }
   ],
   "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
   "cpu": "512",
-  "memory": "1024"
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT-ID>:role/PipelineRole",
+  "family": "employee-microservice"
 }
