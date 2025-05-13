@@ -1,0 +1,37 @@
+{
+  "family": "customer-microservice",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::815791340595:role/PipelineRole",
+  "containerDefinitions": [
+    {
+      "name": "customer",
+      "image": "<IMAGE1_NAME>",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "APP_DB_HOST",
+          "value": "supplierdb.cm8ozknfnbvc.us-east-1.rds.amazonaws.com"
+        }
+      ],
+      "essential": true,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "awslogs-capstone",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "awslogs-capstone"
+        }
+      }
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024"
+}
